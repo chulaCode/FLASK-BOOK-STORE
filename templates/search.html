@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+
+{% block body %}
+<div class="row">
+<div class="col-lg-12 col-md-12 col-sm-12" style="">
+<div class="search_h2"><h2 style="text-align: center; margin-top:-27%;margin-bottom:3%;">SEARCH BOOK</h2></div>
+<h4 style="text-align:center;margin-top:-42%">Search book by author name, isbn or book name</h4>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12" id="search">
+  {% from "include/_formhelpers.html" import render_field %}
+  <form class="" action="{{ url_for('search') }}" method="post">
+
+  <input list="list" name="search" placeholder="Search..">
+    <datalist id="list" name="data-list">
+    {% for result in results %}
+        <option value="{{result.title}}"></option>
+   {% endfor %}
+ </datalist>
+  <div class="icon"></div>
+
+
+  </div>
+  <div class="">
+    <input type="submit"> 
+  </div>
+  </form>
+</div>
+</div>
+{% endblock %}
