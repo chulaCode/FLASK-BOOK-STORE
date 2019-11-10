@@ -93,3 +93,6 @@ header.masthead .masthead-content .masthead-heading{
     ul{
         margin-left: 3px;
     }
+    .text-slanted{
+      font-family: "Courgette", cursive!important;
+    }

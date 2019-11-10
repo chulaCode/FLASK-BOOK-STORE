@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+<div class="row">
+<div class="col-12 ">
+<span class="alert alert-danger mt-5 pt-4 text-right" role="alert" style="float:right;">welcome  {{session.username}}</span>
+</div>
+</div>
+<div class="row">
+  <div class="col-12 mx-auto col-md-8 mt-2 text-center mb-2 ">
+
+
+    <h1 class="text-slanted text-uppercase text-center ">
+      <strong class="text-danger" style="font-family: Courgette, cursive!important;">Books Detail</strong>
+    </h1>
+  </div>
+  <div class="col-lg-5 col-md-5 mx-auto col-sm-10  bg-warning my-3">
+    <div class="card text-center">
+      {% if result!=None %}
+      {% for x in result %}
+      <div class="card-header text-uppercase">
+         <h4> {{results.title}}</h4>
+       </div>
+       <div class="card-body text-danger">
+           <h5 class="card-title">Author: {{results.author}}</h5>
+           <p class="card-text">Year: {{results.year}} </p>
+           <p class="card-text">Isbn: {{results.isbn}}</a>
+           <p class="card-text">  Rating :{{x.rate_val}} of 5</p>
+      </div>
+
+     <div class="card-footer text-muted">
+        Reviews :{{x.comment}}
+        <p> by :{{x.username}}</p>
+     </div>
+     {% endfor %}
+     {% endif %}
+  </div>
+</div>
+<div class="col-lg-5 col-md-5 mx-auto col-sm-10  bg-warning my-3">
+<div class="card text-center">
+  <div class="card-header text-black text-uppercase">
+  <h4> Goodread.com rating</h4>
+  </div>
+  <div class="card-body  text-danger ">
+    <h5 class="card-title">{{average_rating}}</h5>
+    <p class="card-text"><h5> Reviews :</h5></p>
+    <p class="card-text">{{work_ratings_count}}</p>
+  </div>
+  <div class="card-footer text-muted">
+    <a href="/api/{{results.isbn}}">API</a>
+  </div>
+</div>
+</div>
+<div class="col-5 my-1 col-sm-8 ml-4">
+  <div class='container bg-light my-2'>
+    <form class='form-group ' action="" method="POST">
+        <label class=''>Add reviews</label>
+        <select name="rate" class='m-1' required>
+            <option selected value disabled> select rating </option>
+            <option value="1">1 star</option>
+            <option value="2">2 stars</option>
+            <option value="3">3 stars</option>
+            <option value="4">4 stars</option>
+            <option value="5">5 stars</option>
+        </select>
+        <textarea class='form-control' name='comment'>
+        </textarea>
+        <input class='my-2 btn btn-primary' type='submit' value='Submit review'>
+    </form>
+</div>
+</div>
+</div>
+{% endblock %}

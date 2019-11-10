@@ -1,30 +1,83 @@
 {% extends "layout.html" %}
 
+{% block head %}
+<script type="text/javascript">
+  //when value is entered in search field retrieves from db without refresh
+  $(document).ready(() => {
+    $("#ilist").keyup(() => {
+      //alert($('#ilist').val());die();
+      var res = $('#ilist').val();
+      $.ajax({ //create an ajax request to display list
+        type: "POST",
+        url: "{{ url_for('search') }}",
+        data: {
+          search: res
+        },
+        success: response => {
+          //console.log(response);
+          $("#list").html(response);
+          //alert(response);
+        }
+      });
+    });
+    /*
+     //when the form submits record added to the save table
+         $("#searchForm").submit(()=> {
+           //alert("form submitted"); die();
+           //event.preventDefault();
+           let title = $('#ilist').val();
+     //alert(title); die();
+          $.ajax({
+            type: "POST",
+            url:"{{ url_for('save') }}",
+            data:{search: title},
+            success: data=>{
+            console.log(data)
 
+               },
+               error: function(data) {
+                   alert('Form submission failed');die();
+               }
+          });
+       });*/
+  });
+</script>
+
+{% endblock %}
 {% block body %}
 <div class="row">
-<div class="col-lg-12 col-md-12 col-sm-12" style="">
-<div class="search_h2"><h2 style="text-align: center; margin-top:-27%;margin-bottom:3%;">SEARCH BOOK</h2></div>
-<h4 style="text-align:center;margin-top:-42%">Search book by author name, isbn or book name</h4>
-</div>
-<div class="col-lg-12 col-md-12 col-sm-12" id="search">
-  {% from "include/_formhelpers.html" import render_field %}
-  <form class="" action="{{ url_for('search') }}" method="post">
-
-  <input list="list" name="search" placeholder="Search..">
-    <datalist id="list" name="data-list">
-    {% for result in results %}
-        <option value="{{result.title}}"></option>
-   {% endfor %}
- </datalist>
-  <div class="icon"></div>
-
+  <div class="col-4 col-sm-12 my-2">
+    <h3 class="btn-success">welcome {{session.username}}</h3>
 
   </div>
-  <div class="">
-    <input type="submit"> 
-  </div>
-  </form>
 </div>
+<div class="row">
+
+  <div class="col-lg-12 col-md-12 col-sm-12" style="">
+    <div class="search_h2">
+      <h2 style="text-align: center; margin-top:-27%;margin-bottom:3%;">SEARCH BOOK</h2>
+    </div>
+    <h4 style="text-align:center;margin-top:-42%">Search book by author name, isbn or book name</h4>
+  </div>
+  <div class="col-lg-12 col-md-12 col-sm-12" id="search">
+    <div class="">
+
+
+      {% from "include/_formhelpers.html" import render_field %}
+      <form class="" id="searchForm" action="{{ url_for('save') }}" method="post">
+
+
+        <input list="list" id="ilist" name="search" placeholder="Search..">
+        <datalist id="list" name="data-list">
+          {% for result in results %}
+          <option value="{{result.title}}"></option>
+          {% endfor %}
+        </datalist>
+        <div class="icon"></div>
+      </form>
+    </div>
+
+  </div>
+
 </div>
 {% endblock %}

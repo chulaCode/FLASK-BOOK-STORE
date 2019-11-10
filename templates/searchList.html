@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+<div class="row">
+<div class="col-12 ">
+<span class="alert alert-danger mt-5 pt-4 text-right" role="alert" style="float:right;">welcome  {{session.username}}</span>
+</div>
+</div>
+<div class="row">
+  <div class="col-12 mx-auto col-md-8 mt-4 text-center mb-2 ">
+
+
+    <h1 class="text-slanted text-uppercase text-center ">
+      <strong class="text-danger" style="font-family: Courgette, cursive!important;">Search Books</strong>
+    </h1>
+
+    <form class="mt-2" action="{{ url_for('search') }}" method="post" >
+
+      <label htmlFor="search" class="">
+        search book by title, isbn or author
+      </label>
+      <div class="input-group">
+        <input type="text" name="search" id="ilist" placeholder="Enter search subject"
+        class="form-control" />
+
+        <div class="input-group-append">
+          <button type="text" class="input-group-text bg-primary text-white">
+            Submit
+          </button>
+        </div>
+      </div>
+
+    </form>
+</div>
+
+    <div class="col-12 mx-auto col-md-8 my-3  ">
+      <section>
+        {% with messages=get_flashed_messages() %}
+        {% if messages %}
+         <div class="alert alert-danger text-center">{{messages[0]}}</div>
+
+        {% endif %}
+
+        {% endwith %}
+      <div class="list-group ">
+        {% for x in result %}
+           <a href="{{url_for('detail', isbn=x.isbn)}}" class="list-group-item list-group-item-action">
+               <h4 class='text-danger'>{{x.title}}</h4>
+                 by {{x.author}} in {{x.year}}
+                <h6 class='float-right text-muted'>isbn: {{x.isbn}}</h6></a>
+           {% endfor %}
+
+      </div>
+
+
+    </div>
+  </section>
+</div>
+</div>
+{% endblock  %}
